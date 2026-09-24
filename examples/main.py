@@ -103,4 +103,4 @@ def print_postman_examples() -> None:
 
 if __name__ == "__main__":
     print_postman_examples()
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="127.0.0.1", port=8000, debug=True)
