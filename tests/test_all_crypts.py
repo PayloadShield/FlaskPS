@@ -7,7 +7,13 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "examples"))
 
-from main import ALL_CRYPT_TYPES, ROUTE_PREFIX, app  # noqa: E402
+from main import (  # noqa: E402
+    ALL_CRYPT_TYPES,
+    COMPYPS_VERSION,
+    FLASKPS_VERSION,
+    ROUTE_PREFIX,
+    app,
+)
 from flask_payloadshield import PayloadShieldEnc, get_handler  # noqa: E402
 
 FIXED_DATA = {"message": "Hello, Flask!"}
@@ -31,7 +37,11 @@ def test_all_crypt_types_round_trip():
         response = client.get(f"/{prefix}")
         assert response.status_code == 200
         fixed = handler.decode(response.json["encrypted"], config)
-        assert fixed == {"message": "Hello, Flask!"}
+        assert fixed == {
+            "message": "Hello, PayloadShield!",
+            "ComPyPS": COMPYPS_VERSION,
+            "FLaskPS": FLASKPS_VERSION,
+        }
 
         encrypted = handler.encode(SECOND_DATA, config)
         response = client.post(

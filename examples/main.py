@@ -1,13 +1,19 @@
 """Flask example covering every built-in Flask Payload Shield handler."""
 
 import json
+from importlib.metadata import version
 from pathlib import Path
 
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import ec, rsa, x25519
 from flask import Flask
 
-from flask_payloadshield import PayloadShield, PayloadShieldEnc, get_handler
+from flask_payloadshield import (
+    PayloadShield,
+    PayloadShieldEnc,
+    __version__ as FLASKPS_VERSION,
+    get_handler,
+)
 
 BASE_DIR = Path(__file__).resolve().parent
 app = Flask(__name__)
@@ -23,6 +29,7 @@ ROUTE_PREFIX = {
     "hpke": "hpke",
 }
 ALL_CRYPT_TYPES = list(ROUTE_PREFIX)
+COMPYPS_VERSION = version("compyps")
 
 
 def _write_pem_pair_if_missing(private_path: Path, public_path: Path, private_key) -> None:
@@ -69,7 +76,11 @@ def _register_routes(crypt_type: str, prefix: str) -> None:
     @app.get(f"/{prefix}", endpoint=f"{prefix}_get")
     @PayloadShield.encrypt(crypt_type)
     def encrypted_response():
-        return {"message": "Hello, Flask!"}
+        return {
+            "message": "Hello, PayloadShield!",
+            "ComPyPS": COMPYPS_VERSION,
+            "FLaskPS": FLASKPS_VERSION,
+        }
 
     @app.post(f"/{prefix}/dec", endpoint=f"{prefix}_decrypt")
     @PayloadShield.decrypt(crypt_type)

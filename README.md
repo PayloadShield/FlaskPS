@@ -1,8 +1,7 @@
 # Flask Payload Shield
 
 Pluggable Flask decorators for encrypting and decrypting request and response
-payloads. The package preserves the same handler API and wire format as the
-FastAPI sibling project while using Flask's synchronous request context.
+payloads.
 
 ## Installation
 
@@ -128,6 +127,6 @@ Apache-2.0 - See [LICENSE](LICENSE).
 
 ## 📞 Support
 
-- **GitHub Issues**: https://github.com/PayloadShield/FastAPIPS/issues
-- **PyPI Page**: https://pypi.org/project/fastapi_payloadshield/
+- **GitHub Issues**: https://github.com/PayloadShield/FlaskPS/issues
+- **PyPI Page**: https://pypi.org/project/flask_payloadshield/
 - **Author**: Ganesh Kandu <kanduganesh@gmail.com>
